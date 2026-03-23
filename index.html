@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Médica - Sistema Inteligente</title>
+    <title>Clínica Médica - Sistema Inteligente v2.0</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -25,9 +25,9 @@
         <button class="nav-btn" data-tab="documentacao">📚 Documentação</button>
     </nav>
 
-    <!-- DASHBOARD (Mantido da versão anterior) -->
+    <!-- DASHBOARD -->
     <div id="dashboard" class="tab active">
-        <h2>Dashboard</h2>
+        <h2>📊 Dashboard</h2>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">👥</div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🤖</div>
+                <div class="stat-icon">🔔</div>
                 <div class="stat-info">
                     <h3 id="totalNotificacoes">0</h3>
                     <p>Notificações Pendentes</p>
@@ -60,68 +60,90 @@
         </div>
         
         <div class="recent-section">
-            <h3>Próximas Consultas</h3>
+            <h3>📅 Próximas Consultas</h3>
             <ul id="proximasConsultas" class="recent-list"></ul>
         </div>
 
-        <!-- Notificações Recentes -->
         <div class="notifications-section">
             <h3>🔔 Notificações Recentes</h3>
             <div id="notificacoesRecentes" class="notifications-list"></div>
         </div>
     </div>
 
-    <!-- PACIENTES (Mantido) -->
+    <!-- PACIENTES -->
     <div id="pacientes" class="tab">
         <div class="tab-header">
             <h2>👥 Cadastro de Pacientes</h2>
-            <button class="btn-primary" onclick="abrirModalPaciente()">+ Novo Paciente</button>
+            <button class="btn-primary" onclick="abrirModalPaciente()">
+                <i class="fas fa-plus"></i> Novo Paciente
+            </button>
         </div>
         <div class="search-bar">
+            <i class="fas fa-search"></i>
             <input type="text" id="searchPaciente" placeholder="Buscar por nome ou CPF..." onkeyup="filtrarPacientes()">
         </div>
         <div class="table-container">
             <table class="data-table">
                 <thead>
-                    <tr><th>ID</th><th>Nome</th><th>CPF</th><th>Telefone</th><th>Email</th><th>Data Nasc.</th><th>Ações</th></tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Data Nasc.</th>
+                        <th>Ações</th>
+                    </tr>
                 </thead>
                 <tbody id="listaPacientes"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- MÉDICOS (Mantido) -->
+    <!-- MÉDICOS -->
     <div id="medicos" class="tab">
         <div class="tab-header">
             <h2>👨‍⚕️ Cadastro de Médicos</h2>
-            <button class="btn-primary" onclick="abrirModalMedico()">+ Novo Médico</button>
+            <button class="btn-primary" onclick="abrirModalMedico()">
+                <i class="fas fa-plus"></i> Novo Médico
+            </button>
         </div>
         <div class="search-bar">
+            <i class="fas fa-search"></i>
             <input type="text" id="searchMedico" placeholder="Buscar por nome ou especialidade..." onkeyup="filtrarMedicos()">
         </div>
         <div class="table-container">
             <table class="data-table">
                 <thead>
-                    <tr><th>ID</th><th>Nome</th><th>Especialidade</th><th>CRM</th><th>Email</th><th>Ações</th></tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Especialidade</th>
+                        <th>CRM</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
                 </thead>
                 <tbody id="listaMedicos"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- CONSULTAS (Mantido) -->
+    <!-- CONSULTAS -->
     <div id="consultas" class="tab">
         <div class="tab-header">
             <h2>📅 Agendamento de Consultas</h2>
-            <button class="btn-primary" onclick="abrirModalConsulta()">+ Nova Consulta</button>
+            <button class="btn-primary" onclick="abrirModalConsulta()">
+                <i class="fas fa-calendar-plus"></i> Nova Consulta
+            </button>
         </div>
         <div class="filters">
             <select id="filtroStatus" onchange="filtrarConsultas()">
-                <option value="todos">Todos os status</option>
-                <option value="AGENDADA">Agendadas</option>
-                <option value="CONFIRMADA">Confirmadas</option>
-                <option value="REALIZADA">Realizadas</option>
-                <option value="CANCELADA">Canceladas</option>
+                <option value="todos">📋 Todos os status</option>
+                <option value="AGENDADA">⏳ Agendadas</option>
+                <option value="CONFIRMADA">✅ Confirmadas</option>
+                <option value="REALIZADA">✔️ Realizadas</option>
+                <option value="CANCELADA">❌ Canceladas</option>
             </select>
             <button class="btn-secondary" onclick="exportarConsultasPDF()">
                 <i class="fas fa-file-pdf"></i> Exportar PDF
@@ -130,20 +152,27 @@
         <div class="table-container">
             <table class="data-table" id="tabelaConsultas">
                 <thead>
-                    <tr><th>ID</th><th>Paciente</th><th>Médico</th><th>Data/Hora</th><th>Status</th><th>Ações</th></tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Médico</th>
+                        <th>Data/Hora</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
                 </thead>
                 <tbody id="listaConsultas"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- RELATÓRIOS - NOVA FEATURE -->
+    <!-- RELATÓRIOS -->
     <div id="reports" class="tab">
         <h2>📈 Geração de Relatórios</h2>
         
         <div class="report-controls">
             <div class="report-type">
-                <label>Tipo de Relatório:</label>
+                <label><i class="fas fa-chart-line"></i> Tipo de Relatório:</label>
                 <select id="tipoRelatorio">
                     <option value="consultas">Consultas por Período</option>
                     <option value="pacientes">Pacientes Cadastrados</option>
@@ -154,9 +183,9 @@
             </div>
             
             <div class="date-range" id="dateRange">
-                <label>Data Início:</label>
+                <label><i class="fas fa-calendar-alt"></i> Data Início:</label>
                 <input type="date" id="dataInicio">
-                <label>Data Fim:</label>
+                <label><i class="fas fa-calendar-alt"></i> Data Fim:</label>
                 <input type="date" id="dataFim">
             </div>
             
@@ -165,7 +194,7 @@
                     <i class="fas fa-chart-line"></i> Gerar Relatório
                 </button>
                 <button class="btn-secondary" onclick="exportarRelatorioPDF()">
-                    <i class="fas fa-download"></i> Exportar PDF
+                    <i class="fas fa-file-pdf"></i> Exportar PDF
                 </button>
                 <button class="btn-secondary" onclick="exportarRelatorioExcel()">
                     <i class="fas fa-file-excel"></i> Exportar Excel
@@ -179,24 +208,30 @@
         </div>
     </div>
 
-    <!-- DOCUMENTAÇÃO (Atualizada) -->
+    <!-- DOCUMENTAÇÃO -->
     <div id="documentacao" class="tab">
         <h2>📚 Documentação Técnica</h2>
         
         <div class="doc-nav">
-            <button class="doc-btn active" data-doc="requisitos">Requisitos</button>
-            <button class="doc-btn" data-doc="arquitetura">Arquitetura</button>
-            <button class="doc-btn" data-doc="uml">Diagramas UML</button>
-            <button class="doc-btn" data-doc="testes">Testes</button>
-            <button class="doc-btn" data-doc="changelog">Changelog</button>
+            <button class="doc-btn active" data-doc="requisitos">📋 Requisitos</button>
+            <button class="doc-btn" data-doc="arquitetura">🏗️ Arquitetura</button>
+            <button class="doc-btn" data-doc="uml">📊 Diagramas UML</button>
+            <button class="doc-btn" data-doc="testes">🧪 Testes</button>
+            <button class="doc-btn" data-doc="changelog">📝 Changelog</button>
         </div>
 
         <div id="requisitos" class="doc-content active">
             <h3>📋 Levantamento de Requisitos v2.0</h3>
             <div class="req-grid">
                 <div class="req-card">
-                    <h4>Novos Requisitos Funcionais</h4>
+                    <h4><i class="fas fa-check-circle"></i> Requisitos Funcionais</h4>
                     <ul>
+                        <li>RF01 - Cadastrar, editar e excluir pacientes</li>
+                        <li>RF02 - Cadastrar, editar e excluir médicos</li>
+                        <li>RF03 - Agendar, confirmar, realizar e cancelar consultas</li>
+                        <li>RF04 - Visualizar dashboard com métricas</li>
+                        <li>RF05 - Filtrar e buscar registros</li>
+                        <li>RF06 - Validar CPF e datas de consulta</li>
                         <li>RF07 - Chatbot IA para atendimento automatizado</li>
                         <li>RF08 - Geração de relatórios analíticos com gráficos</li>
                         <li>RF09 - Sistema de notificações por email/sms simuladas</li>
@@ -206,8 +241,12 @@
                     </ul>
                 </div>
                 <div class="req-card">
-                    <h4>Novos Requisitos Não Funcionais</h4>
+                    <h4><i class="fas fa-shield-alt"></i> Requisitos Não Funcionais</h4>
                     <ul>
+                        <li>RNF01 - Interface responsiva (mobile/desktop)</li>
+                        <li>RNF02 - Código modular e documentado</li>
+                        <li>RNF03 - Persistência local (LocalStorage)</li>
+                        <li>RNF04 - Conformidade com LGPD</li>
                         <li>RNF05 - Processamento assíncrono de notificações</li>
                         <li>RNF06 - Cache de relatórios para performance</li>
                         <li>RNF07 - IA baseada em regras e padrões</li>
@@ -219,43 +258,76 @@
         <div id="arquitetura" class="doc-content">
             <h3>🏗️ Arquitetura em Camadas v2.0</h3>
             <pre class="architecture">
-┌─────────────────────────────────────────────┐
-│          CAMADA DE APRESENTAÇÃO              │
-│     (HTML, CSS, Eventos, Modais)            │
-├─────────────────────────────────────────────┤
-│          CAMADA DE CONTROLE                  │
-│     (app.js, Manipuladores de UI)           │
-├─────────────────────────────────────────────┤
-│       CAMADA DE SERVIÇOS (NOVO)              │
-│  ┌────────────┬────────────┬────────────┐   │
-│  │ ChatbotIA  │ ReportsGen │ NotifySvc  │   │
-│  └────────────┴────────────┴────────────┘   │
-├─────────────────────────────────────────────┤
-│          CAMADA DE NEGÓCIO                   │
-│     (Validações, Regras de Negócio)         │
-├─────────────────────────────────────────────┤
-│          CAMADA DE DADOS                     │
-│     (LocalStorage, DataService)             │
-└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                 CAMADA DE APRESENTAÇÃO                   │
+│            (HTML, CSS, Eventos, Modais, UI)             │
+├─────────────────────────────────────────────────────────┤
+│                  CAMADA DE CONTROLE                      │
+│        (app.js, Manipuladores de UI, Navegação)         │
+├─────────────────────────────────────────────────────────┤
+│                  CAMADA DE SERVIÇOS                      │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐    │
+│  │  ChatbotIA   │ │ReportGenerator│ │NotificationSvc│    │
+│  │   (chatbot)  │ │  (reports)   │ │(notifications)│    │
+│  └──────────────┘ └──────────────┘ └──────────────┘    │
+├─────────────────────────────────────────────────────────┤
+│                  CAMADA DE NEGÓCIO                       │
+│         (Validações, Regras de Negócio, CPF)            │
+├─────────────────────────────────────────────────────────┤
+│                  CAMADA DE DADOS                         │
+│     (DataService, LocalStorage, Persistência)           │
+└─────────────────────────────────────────────────────────┘
             </pre>
         </div>
 
         <div id="uml" class="doc-content">
             <h3>📊 Diagramas UML v2.0</h3>
             <div class="uml-tabs">
-                <button class="uml-btn active" data-uml="classes">Classes</button>
-                <button class="uml-btn" data-uml="casos">Casos de Uso</button>
-                <button class="uml-btn" data-uml="sequencia">Sequência</button>
-                <button class="uml-btn" data-uml="componentes">Componentes</button>
+                <button class="uml-btn active" data-uml="classes">📦 Classes</button>
+                <button class="uml-btn" data-uml="casos">🎭 Casos de Uso</button>
+                <button class="uml-btn" data-uml="sequencia">🔄 Sequência</button>
+                <button class="uml-btn" data-uml="componentes">🧩 Componentes</button>
             </div>
             
             <div id="classes-diagram" class="uml-diagram active">
                 <div class="uml-class-grid">
                     <div class="uml-class">
+                        <div class="class-name">Paciente</div>
+                        <div class="class-attrs">
+                            - id: number<br>
+                            - nome: string<br>
+                            - cpf: string<br>
+                            - telefone: string<br>
+                            - email: string<br>
+                            - dataNasc: string
+                        </div>
+                    </div>
+                    <div class="uml-class">
+                        <div class="class-name">Médico</div>
+                        <div class="class-attrs">
+                            - id: number<br>
+                            - nome: string<br>
+                            - especialidade: string<br>
+                            - crm: string<br>
+                            - email: string
+                        </div>
+                    </div>
+                    <div class="uml-class">
+                        <div class="class-name">Consulta</div>
+                        <div class="class-attrs">
+                            - id: number<br>
+                            - pacienteId: number<br>
+                            - medicoId: number<br>
+                            - dataHora: string<br>
+                            - status: string
+                        </div>
+                    </div>
+                    <div class="uml-class">
                         <div class="class-name">ChatbotIA</div>
                         <div class="class-attrs">
-                            - contexto: string<br>
-                            - historico: Array
+                            - contexto: Object<br>
+                            - historico: Array<br>
+                            - intencoes: Map
                         </div>
                         <div class="class-methods">
                             + processarMensagem()<br>
@@ -278,49 +350,117 @@
                     <div class="uml-class">
                         <div class="class-name">NotificationService</div>
                         <div class="class-attrs">
-                            - filaNotificacoes: Queue<br>
-                            - agendamentos: Array
+                            - notificacoes: Array<br>
+                            - permissoes: Object
                         </div>
                         <div class="class-methods">
                             + enviarNotificacao()<br>
-                            + agendarLembrete()<br>
-                            + verificarAgendamentos()
+                            + verificarAgendamentos()<br>
+                            + agendarLembrete()
                         </div>
+                    </div>
+                </div>
+                <p class="uml-relation">
+                    <strong>📌 Relações:</strong> 
+                    Paciente 1..* Consulta | 
+                    Médico 1..* Consulta |
+                    NotificationService → Consulta, Paciente
+                </p>
+            </div>
+            
+            <div id="casos-diagram" class="uml-diagram">
+                <div class="usecase-container">
+                    <div class="actor">👤 Paciente</div>
+                    <div class="usecases">
+                        <span class="usecase">Agendar Consulta</span>
+                        <span class="usecase">Visualizar Consultas</span>
+                        <span class="usecase">Cancelar Consulta</span>
+                        <span class="usecase">Interagir com Chatbot</span>
+                        <span class="usecase">Receber Notificações</span>
+                    </div>
+                </div>
+                <div class="usecase-container">
+                    <div class="actor">👨‍⚕️ Médico</div>
+                    <div class="usecases">
+                        <span class="usecase">Atender Consulta</span>
+                        <span class="usecase">Visualizar Agenda</span>
+                        <span class="usecase">Confirmar Atendimento</span>
+                    </div>
+                </div>
+                <div class="usecase-container">
+                    <div class="actor">🧑‍💼 Administrador</div>
+                    <div class="usecases">
+                        <span class="usecase">Gerenciar Pacientes</span>
+                        <span class="usecase">Gerenciar Médicos</span>
+                        <span class="usecase">Gerenciar Consultas</span>
+                        <span class="usecase">Gerar Relatórios</span>
+                        <span class="usecase">Exportar Dados</span>
+                    </div>
+                </div>
+                <div class="usecase-container">
+                    <div class="actor">🤖 Sistema IA</div>
+                    <div class="usecases">
+                        <span class="usecase">Processar Linguagem</span>
+                        <span class="usecase">Analisar Intenção</span>
+                        <span class="usecase">Gerar Respostas</span>
                     </div>
                 </div>
             </div>
             
+            <div id="sequencia-diagram" class="uml-diagram">
+                <pre class="sequence-diagram">
+Paciente → Interface: Solicita agendamento
+Interface → Controlador: agendarConsulta(dados)
+Controlador → Validador: validarDados(dados)
+Validador → Controlador: dados válidos
+Controlador → DataService: salvarConsulta(consulta)
+DataService → Controlador: confirmação
+Controlador → NotificationService: agendarLembrete()
+Controlador → Interface: atualizarView()
+Interface → Paciente: exibir confirmação
+                </pre>
+            </div>
+            
             <div id="componentes-diagram" class="uml-diagram">
                 <pre class="component-diagram">
-┌──────────────────────────────────────────────────┐
-│                  SISTEMA CLÍNICA                  │
-├──────────────────────────────────────────────────┤
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐ │
-│  │  Frontend  │  │   Chatbot  │  │  Reports   │ │
-│  │   (UI)     │◄─┤    IA      │◄─┤  Engine    │ │
-│  └────────────┘  └────────────┘  └────────────┘ │
-│         ▲               ▲               ▲        │
-│         │               │               │        │
-│  ┌──────────────────────────────────────────┐   │
-│  │           Core Business Logic             │   │
-│  └──────────────────────────────────────────┘   │
-│         ▼               ▼               ▼        │
-│  ┌──────────────────────────────────────────┐   │
-│  │           LocalStorage / IndexedDB        │   │
-│  └──────────────────────────────────────────┘   │
-└──────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                     SISTEMA CLÍNICA v2.0                     │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
+│  │  Frontend   │  │  Chatbot    │  │  Reports    │         │
+│  │   (UI)      │◄─┤    IA       │◄─┤   Engine    │         │
+│  │  index.html │  │ chatbot.js  │  │ reports.js  │         │
+│  └─────────────┘  └─────────────┘  └─────────────┘         │
+│         ▲               ▲               ▲                    │
+│         │               │               │                    │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              Core Business Logic (app.js)            │    │
+│  │         CRUD Operations | Data Validation            │    │
+│  └─────────────────────────────────────────────────────┘    │
+│         ▼               ▼               ▼                    │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              Data Layer (LocalStorage)               │    │
+│  │   pacientes | medicos | consultas | notificacoes    │    │
+│  └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
                 </pre>
             </div>
         </div>
 
         <div id="testes" class="doc-content">
-            <h3>🧪 Plano de Testes - Novas Features</h3>
+            <h3>🧪 Plano de Testes</h3>
             <table class="test-table">
-                <tr><th>Caso de Teste</th><th>Pré-condição</th><th>Passos</th><th>Resultado Esperado</th></tr>
-                <tr><td>CT05 - Chatbot IA</td><td>Sistema carregado</td><td>Enviar mensagem "Agendar consulta"</td><td>Resposta com instruções</td></tr>
-                <tr><td>CT06 - Gerar Relatório</td><td>Dados existentes</td><td>Selecionar período e gerar</td><td>Gráfico e dados exibidos</td></tr>
-                <tr><td>CT07 - Notificação Automática</td><td>Consulta próxima</td><td>Aguardar verificação</td><td>Notificação exibida</td></tr>
-                <tr><td>CT08 - Exportar PDF</td><td>Relatório gerado</td><td>Clicar em Exportar PDF</td><td>Arquivo PDF baixado</td></tr>
+                <thead>
+                    <tr><th>Caso de Teste</th><th>Pré-condição</th><th>Passos</th><th>Resultado Esperado</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>CT01 - Cadastrar Paciente</td><td>Campos válidos</td><td>Preencher e salvar</td><td>Paciente listado</td></tr>
+                    <tr><td>CT02 - Editar Paciente</td><td>Paciente existe</td><td>Alterar dados e salvar</td><td>Dados atualizados sem erro de CPF</td></tr>
+                    <tr><td>CT03 - Agendar Consulta</td><td>Paciente e médico existentes</td><td>Selecionar e salvar</td><td>Consulta agendada</td></tr>
+                    <tr><td>CT04 - Chatbot IA</td><td>Sistema carregado</td><td>Enviar mensagem</td><td>Resposta com instruções</td></tr>
+                    <tr><td>CT05 - Gerar Relatório</td><td>Dados existentes</td><td>Selecionar período e gerar</td><td>Gráfico e dados exibidos</td></tr>
+                    <tr><td>CT06 - Notificação Automática</td><td>Consulta próxima</td><td>Aguardar verificação</td><td>Notificação exibida</td></tr>
+                </tbody>
             </table>
         </div>
 
@@ -329,17 +469,26 @@
             <div class="changelog">
                 <h4>✨ Novas Funcionalidades</h4>
                 <ul>
-                    <li><strong>Chatbot IA</strong> - Assistente virtual para atendimento automático</li>
+                    <li><strong>Chatbot IA</strong> - Assistente virtual para atendimento automatizado</li>
                     <li><strong>Geração de Relatórios</strong> - Relatórios analíticos com gráficos interativos</li>
                     <li><strong>Sistema de Notificações</strong> - Alertas automáticos de consultas</li>
                     <li><strong>Exportação de Dados</strong> - PDF e Excel para relatórios</li>
                     <li><strong>Dashboard Inteligente</strong> - Métricas e indicadores em tempo real</li>
+                    <li><strong>Edição Completa</strong> - Agora é possível editar pacientes e médicos sem erro de CPF</li>
                 </ul>
                 <h4>🔧 Melhorias</h4>
                 <ul>
-                    <li>Otimização de performance com lazy loading</li>
-                    <li>Melhorias na UX com feedback visual</li>
+                    <li>Validação completa de CPF com dígitos verificadores</li>
+                    <li>Campo de email adicionado para pacientes e médicos</li>
+                    <li>Interface com ícones e feedback visual aprimorado</li>
                     <li>Cache de relatórios para consultas frequentes</li>
+                    <li>Otimização de performance com lazy loading</li>
+                </ul>
+                <h4>🐛 Correções</h4>
+                <ul>
+                    <li>Corrigido erro de "CPF já cadastrado" ao editar pacientes</li>
+                    <li>Corrigida validação de datas para consultas</li>
+                    <li>Corrigida exclusão de registros com dependências</li>
                 </ul>
             </div>
         </div>
@@ -354,65 +503,67 @@
 
 <div id="chatbotWindow" class="chatbot-window hidden">
     <div class="chatbot-header">
-        <h3>🤖 Assistente IA</h3>
-        <button onclick="toggleChatbot()">✕</button>
+        <h3><i class="fas fa-robot"></i> Assistente IA</h3>
+        <button onclick="toggleChatbot()"><i class="fas fa-times"></i></button>
     </div>
     <div id="chatMessages" class="chat-messages">
         <div class="message bot">
-            Olá! Sou o assistente virtual da Clínica Saúde Total.<br>
+            <i class="fas fa-robot"></i> Olá! Sou o assistente virtual da Clínica Saúde Total.<br><br>
             Posso ajudar com:<br>
-            • Agendamento de consultas<br>
-            • Informações sobre médicos<br>
-            • Cancelamento de consultas<br>
-            • Dúvidas gerais<br><br>
+            • 📅 Agendamento de consultas<br>
+            • 👨‍⚕️ Informações sobre médicos<br>
+            • ❌ Cancelamento de consultas<br>
+            • 💰 Valores e planos<br>
+            • 📍 Localização<br><br>
             Como posso ajudar você hoje?
         </div>
     </div>
     <div class="chat-input">
         <input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="handleChatKeyPress(event)">
-        <button onclick="enviarMensagem()">Enviar</button>
+        <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
     </div>
 </div>
 
-<!-- MODAIS (Atualizados) -->
+<!-- MODAIS -->
 <div id="modalPaciente" class="modal">
     <div class="modal-content">
         <span class="close" onclick="fecharModal('modalPaciente')">&times;</span>
-        <h3>Cadastrar Paciente</h3>
+        <h3><i class="fas fa-user-plus"></i> Cadastrar Paciente</h3>
         <input type="text" id="modalPacienteNome" placeholder="Nome completo">
-        <input type="text" id="modalPacienteCpf" placeholder="CPF">
+        <input type="text" id="modalPacienteCpf" placeholder="CPF (000.000.000-00)">
         <input type="text" id="modalPacienteTelefone" placeholder="Telefone">
         <input type="email" id="modalPacienteEmail" placeholder="E-mail">
         <input type="date" id="modalPacienteDataNasc" placeholder="Data de Nascimento">
-        <button class="btn-primary" onclick="salvarPaciente()">Salvar</button>
+        <button class="btn-primary" onclick="salvarPaciente()"><i class="fas fa-save"></i> Salvar</button>
     </div>
 </div>
 
 <div id="modalMedico" class="modal">
     <div class="modal-content">
         <span class="close" onclick="fecharModal('modalMedico')">&times;</span>
-        <h3>Cadastrar Médico</h3>
+        <h3><i class="fas fa-user-md"></i> Cadastrar Médico</h3>
         <input type="text" id="modalMedicoNome" placeholder="Nome completo">
         <input type="text" id="modalMedicoEspecialidade" placeholder="Especialidade">
         <input type="text" id="modalMedicoCrm" placeholder="CRM">
         <input type="email" id="modalMedicoEmail" placeholder="E-mail">
-        <button class="btn-primary" onclick="salvarMedico()">Salvar</button>
+        <button class="btn-primary" onclick="salvarMedico()"><i class="fas fa-save"></i> Salvar</button>
     </div>
 </div>
 
 <div id="modalConsulta" class="modal">
     <div class="modal-content">
         <span class="close" onclick="fecharModal('modalConsulta')">&times;</span>
-        <h3>Agendar Consulta</h3>
+        <h3><i class="fas fa-calendar-check"></i> Agendar Consulta</h3>
         <select id="modalConsultaPaciente"></select>
         <select id="modalConsultaMedico"></select>
         <input type="datetime-local" id="modalConsultaData">
         <div class="checkbox-group">
             <label>
-                <input type="checkbox" id="notificarPaciente"> Enviar notificação por e-mail
+                <input type="checkbox" id="notificarPaciente" checked>
+                <i class="fas fa-bell"></i> Enviar notificações por e-mail
             </label>
         </div>
-        <button class="btn-primary" onclick="salvarConsulta()">Agendar</button>
+        <button class="btn-primary" onclick="salvarConsulta()"><i class="fas fa-calendar-plus"></i> Agendar</button>
     </div>
 </div>
 
