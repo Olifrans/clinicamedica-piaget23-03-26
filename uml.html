@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>UML - Clínica Médica</title>
+<link rel="stylesheet" href="uml.css">
+</head>
+<body>
+
+<h1>📊 Documentação UML - Sistema de Clínica Médica</h1>
+
+<div class="menu">
+    <button onclick="showDiagram('classes')">Classes</button>
+    <button onclick="showDiagram('usecase')">Casos de Uso</button>
+    <button onclick="showDiagram('sequence')">Sequência</button>
+    <button onclick="showDiagram('activity')">Atividade</button>
+</div>
+
+<!-- CLASSES -->
+<div id="classes" class="diagram">
+
+    <h2>Diagrama de Classes</h2>
+
+    <div class="grid">
+        <div class="box">
+            <h3>Paciente</h3>
+            <hr>
+            <p>- id</p>
+            <p>- nome</p>
+            <p>- cpf</p>
+            <hr>
+            <p>+ cadastrar()</p>
+        </div>
+
+        <div class="box">
+            <h3>Médico</h3>
+            <hr>
+            <p>- id</p>
+            <p>- nome</p>
+            <p>- especialidade</p>
+            <hr>
+            <p>+ cadastrar()</p>
+        </div>
+
+        <div class="box">
+            <h3>Consulta</h3>
+            <hr>
+            <p>- id</p>
+            <p>- data</p>
+            <p>- status</p>
+            <hr>
+            <p>+ agendar()</p>
+            <p>+ finalizar()</p>
+        </div>
+    </div>
+
+    <p class="rel">
+        Relações: <br>
+        Paciente 1..* Consulta <br>
+        Médico 1..* Consulta
+    </p>
+
+</div>
+
+<!-- CASOS DE USO -->
+<div id="usecase" class="diagram hidden">
+
+    <h2>Diagrama de Casos de Uso</h2>
+
+    <div class="usecase">
+        <div class="actor">👤 Paciente</div>
+        <ul>
+            <li>Agendar Consulta</li>
+            <li>Visualizar Consultas</li>
+        </ul>
+    </div>
+
+    <div class="usecase">
+        <div class="actor">👨‍⚕️ Médico</div>
+        <ul>
+            <li>Atender Consulta</li>
+            <li>Registrar Diagnóstico</li>
+        </ul>
+    </div>
+
+    <div class="usecase">
+        <div class="actor">🧑‍💼 Administrador</div>
+        <ul>
+            <li>Cadastrar Paciente</li>
+            <li>Cadastrar Médico</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- SEQUÊNCIA -->
+<div id="sequence" class="diagram hidden">
+
+<h2>Diagrama de Sequência</h2>
+
+<pre>
+Paciente → Interface
+Interface → Sistema: solicitar agendamento
+Sistema → Banco: salvar consulta
+Banco → Sistema: confirmação
+Sistema → Interface: sucesso
+Interface → Paciente: exibir confirmação
+</pre>
+
+</div>
+
+<!-- ATIVIDADE -->
+<div id="activity" class="diagram hidden">
+
+<h2>Diagrama de Atividade</h2>
+
+<pre>
+Início
+ ↓
+Cadastrar paciente?
+ ↓
+[Sim] → Inserir dados → Salvar
+ ↓
+Agendar consulta
+ ↓
+Selecionar médico
+ ↓
+Escolher data
+ ↓
+Confirmar
+ ↓
+Consulta agendada
+ ↓
+Fim
+</pre>
+
+</div>
+
+<script src="uml.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+body {
+    font-family: Arial;
+    background: #f0f2f5;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.menu {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+input, select {
+    padding: 8px;
+    margin: 5px;
+}
+
+.tab {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+ul {
+    margin-top: 10px;
+}
+
+.diagram {
+    display: flex;
+    gap: 20px;
+}
+
+.box {
+    border: 2px solid black;
+    padding: 10px;
+    width: 150px;
+}
+
+.tabs {
+    margin-bottom: 10px;
+}
