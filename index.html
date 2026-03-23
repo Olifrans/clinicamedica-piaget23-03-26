@@ -1,101 +1,331 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Clínica Médica</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Médica - Sistema de Gestão</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🏥 Sistema de Clínica Médica</h1>
+<div class="container">
+    <header>
+        <h1>🏥 Clínica Médica Saúde Total</h1>
+        <p class="subtitle">Sistema de Gestão Integrado</p>
+    </header>
 
-<div class="menu">
-    <button onclick="showTab('pacientes')">Pacientes</button>
-    <button onclick="showTab('medicos')">Médicos</button>
-    <button onclick="showTab('consultas')">Consultas</button>
-    <button onclick="showTab('uml')">UML</button>
-</div>
+    <nav class="main-nav">
+        <button class="nav-btn" data-tab="dashboard">📊 Dashboard</button>
+        <button class="nav-btn" data-tab="pacientes">👥 Pacientes</button>
+        <button class="nav-btn" data-tab="medicos">👨‍⚕️ Médicos</button>
+        <button class="nav-btn" data-tab="consultas">📅 Consultas</button>
+        <button class="nav-btn" data-tab="documentacao">📚 Documentação</button>
+    </nav>
 
-<!-- PACIENTES -->
-<div id="pacientes" class="tab">
-    <h2>Cadastro de Pacientes</h2>
-    <input id="pNome" placeholder="Nome">
-    <input id="pCpf" placeholder="CPF">
-    <button onclick="addPaciente()">Adicionar</button>
-
-    <ul id="listaPacientes"></ul>
-</div>
-
-<!-- MEDICOS -->
-<div id="medicos" class="tab hidden">
-    <h2>Cadastro de Médicos</h2>
-    <input id="mNome" placeholder="Nome">
-    <input id="mEsp" placeholder="Especialidade">
-    <button onclick="addMedico()">Adicionar</button>
-
-    <ul id="listaMedicos"></ul>
-</div>
-
-<!-- CONSULTAS -->
-<div id="consultas" class="tab hidden">
-    <h2>Agendar Consulta</h2>
-
-    <select id="selPaciente"></select>
-    <select id="selMedico"></select>
-    <input type="date" id="dataConsulta">
-    <button onclick="agendar()">Agendar</button>
-
-    <ul id="listaConsultas"></ul>
-</div>
-
-<!-- UML -->
-<div id="uml" class="tab hidden">
-    <h2>📊 Documentação UML</h2>
-
-    <div class="tabs">
-        <button onclick="showUML('classes')">Classes</button>
-        <button onclick="showUML('usecase')">Casos de Uso</button>
-        <button onclick="showUML('sequence')">Sequência</button>
-    </div>
-
-    <div id="classes" class="umlTab">
-        <div class="diagram">
-            <div class="box">
-                <h3>Paciente</h3>
-                <p>id</p>
-                <p>nome</p>
-                <p>cpf</p>
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="tab active">
+        <h2>Dashboard</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <h3 id="totalPacientes">0</h3>
+                    <p>Pacientes Cadastrados</p>
+                </div>
             </div>
-
-            <div class="box">
-                <h3>Médico</h3>
-                <p>id</p>
-                <p>nome</p>
-                <p>especialidade</p>
+            <div class="stat-card">
+                <div class="stat-icon">👨‍⚕️</div>
+                <div class="stat-info">
+                    <h3 id="totalMedicos">0</h3>
+                    <p>Médicos Ativos</p>
+                </div>
             </div>
-
-            <div class="box">
-                <h3>Consulta</h3>
-                <p>id</p>
-                <p>data</p>
-                <p>status</p>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <h3 id="totalConsultas">0</h3>
+                    <p>Consultas Agendadas</p>
+                </div>
             </div>
+        </div>
+        
+        <div class="recent-section">
+            <h3>Próximas Consultas</h3>
+            <ul id="proximasConsultas" class="recent-list"></ul>
         </div>
     </div>
 
-    <div id="usecase" class="umlTab hidden">
-        <ul>
-            <li>Agendar consulta</li>
-            <li>Cancelar consulta</li>
-            <li>Cadastrar paciente</li>
-            <li>Cadastrar médico</li>
-        </ul>
+    <!-- PACIENTES -->
+    <div id="pacientes" class="tab">
+        <div class="tab-header">
+            <h2>👥 Cadastro de Pacientes</h2>
+            <button class="btn-primary" onclick="abrirModalPaciente()">+ Novo Paciente</button>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchPaciente" placeholder="Buscar por nome ou CPF..." onkeyup="filtrarPacientes()">
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>CPF</th><th>Telefone</th><th>Data Nasc.</th><th>Ações</th></tr>
+                </thead>
+                <tbody id="listaPacientes"></tbody>
+            </table>
+        </div>
     </div>
 
-    <div id="sequence" class="umlTab hidden">
-<pre>
-Paciente → Interface → Service → Dados
-        </pre>
+    <!-- MÉDICOS -->
+    <div id="medicos" class="tab">
+        <div class="tab-header">
+            <h2>👨‍⚕️ Cadastro de Médicos</h2>
+            <button class="btn-primary" onclick="abrirModalMedico()">+ Novo Médico</button>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchMedico" placeholder="Buscar por nome ou especialidade..." onkeyup="filtrarMedicos()">
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>Especialidade</th><th>CRM</th><th>Ações</th></tr>
+                </thead>
+                <tbody id="listaMedicos"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CONSULTAS -->
+    <div id="consultas" class="tab">
+        <div class="tab-header">
+            <h2>📅 Agendamento de Consultas</h2>
+            <button class="btn-primary" onclick="abrirModalConsulta()">+ Nova Consulta</button>
+        </div>
+
+        <div class="filters">
+            <select id="filtroStatus" onchange="filtrarConsultas()">
+                <option value="todos">Todos os status</option>
+                <option value="AGENDADA">Agendadas</option>
+                <option value="CONFIRMADA">Confirmadas</option>
+                <option value="REALIZADA">Realizadas</option>
+                <option value="CANCELADA">Canceladas</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr><th>ID</th><th>Paciente</th><th>Médico</th><th>Data/Hora</th><th>Status</th><th>Ações</th></tr>
+                </thead>
+                <tbody id="listaConsultas"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- DOCUMENTAÇÃO -->
+    <div id="documentacao" class="tab">
+        <h2>📚 Documentação Técnica</h2>
+        
+        <div class="doc-nav">
+            <button class="doc-btn active" data-doc="requisitos">Requisitos</button>
+            <button class="doc-btn" data-doc="arquitetura">Arquitetura</button>
+            <button class="doc-btn" data-doc="uml">Diagramas UML</button>
+            <button class="doc-btn" data-doc="testes">Testes</button>
+        </div>
+
+        <div id="requisitos" class="doc-content active">
+            <h3>📋 Levantamento de Requisitos</h3>
+            <div class="req-grid">
+                <div class="req-card">
+                    <h4>Requisitos Funcionais</h4>
+                    <ul>
+                        <li>RF01 - Cadastrar, editar e excluir pacientes</li>
+                        <li>RF02 - Cadastrar, editar e excluir médicos</li>
+                        <li>RF03 - Agendar, confirmar, realizar e cancelar consultas</li>
+                        <li>RF04 - Visualizar dashboard com métricas</li>
+                        <li>RF05 - Filtrar e buscar registros</li>
+                        <li>RF06 - Validar CPF e datas de consulta</li>
+                    </ul>
+                </div>
+                <div class="req-card">
+                    <h4>Requisitos Não Funcionais</h4>
+                    <ul>
+                        <li>RNF01 - Interface responsiva (mobile/desktop)</li>
+                        <li>RNF02 - Código modular e documentado</li>
+                        <li>RNF03 - Persistência local (LocalStorage)</li>
+                        <li>RNF04 - Conformidade com LGPD</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="arquitetura" class="doc-content">
+            <h3>🏗️ Arquitetura em Camadas</h3>
+            <pre class="architecture">
+┌─────────────────────────────────────┐
+│         CAMADA DE APRESENTAÇÃO       │
+│  (HTML, CSS, Eventos de Interface)  │
+├─────────────────────────────────────┤
+│         CAMADA DE CONTROLE           │
+│     (app.js - Manipuladores)        │
+├─────────────────────────────────────┤
+│         CAMADA DE NEGÓCIO            │
+│  (Validações, Regras de Negócio)    │
+├─────────────────────────────────────┤
+│         CAMADA DE DADOS              │
+│  (LocalStorage, DataService)        │
+└─────────────────────────────────────┘
+            </pre>
+        </div>
+
+        <div id="uml" class="doc-content">
+            <h3>📊 Diagramas UML</h3>
+            <div class="uml-tabs">
+                <button class="uml-btn active" data-uml="classes">Classes</button>
+                <button class="uml-btn" data-uml="casos">Casos de Uso</button>
+                <button class="uml-btn" data-uml="sequencia">Sequência</button>
+            </div>
+            
+            <div id="classes-diagram" class="uml-diagram active">
+                <div class="uml-class-grid">
+                    <div class="uml-class">
+                        <div class="class-name">Paciente</div>
+                        <div class="class-attrs">
+                            - id: number<br>
+                            - nome: string<br>
+                            - cpf: string<br>
+                            - telefone: string<br>
+                            - dataNasc: string
+                        </div>
+                        <div class="class-methods">
+                            + cadastrar()<br>
+                            + atualizar()<br>
+                            + excluir()
+                        </div>
+                    </div>
+                    <div class="uml-class">
+                        <div class="class-name">Médico</div>
+                        <div class="class-attrs">
+                            - id: number<br>
+                            - nome: string<br>
+                            - especialidade: string<br>
+                            - crm: string
+                        </div>
+                        <div class="class-methods">
+                            + cadastrar()<br>
+                            + atualizar()<br>
+                            + excluir()
+                        </div>
+                    </div>
+                    <div class="uml-class">
+                        <div class="class-name">Consulta</div>
+                        <div class="class-attrs">
+                            - id: number<br>
+                            - pacienteId: number<br>
+                            - medicoId: number<br>
+                            - dataHora: string<br>
+                            - status: string
+                        </div>
+                        <div class="class-methods">
+                            + agendar()<br>
+                            + confirmar()<br>
+                            + realizar()<br>
+                            + cancelar()
+                        </div>
+                    </div>
+                </div>
+                <p class="uml-relation"><strong>Relações:</strong> Paciente 1..* Consulta | Médico 1..* Consulta</p>
+            </div>
+            
+            <div id="casos-diagram" class="uml-diagram">
+                <div class="usecase-container">
+                    <div class="actor">👤 Paciente</div>
+                    <div class="usecases">
+                        <span class="usecase">Agendar Consulta</span>
+                        <span class="usecase">Visualizar Consultas</span>
+                        <span class="usecase">Cancelar Consulta</span>
+                    </div>
+                </div>
+                <div class="usecase-container">
+                    <div class="actor">👨‍⚕️ Médico</div>
+                    <div class="usecases">
+                        <span class="usecase">Atender Consulta</span>
+                        <span class="usecase">Registrar Diagnóstico</span>
+                        <span class="usecase">Visualizar Agenda</span>
+                    </div>
+                </div>
+                <div class="usecase-container">
+                    <div class="actor">🧑‍💼 Administrador</div>
+                    <div class="usecases">
+                        <span class="usecase">Gerenciar Pacientes</span>
+                        <span class="usecase">Gerenciar Médicos</span>
+                        <span class="usecase">Gerenciar Consultas</span>
+                        <span class="usecase">Visualizar Relatórios</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="sequencia-diagram" class="uml-diagram">
+                <pre class="sequence-diagram">
+Paciente → Interface: Solicita agendamento
+Interface → Controlador: agendarConsulta(dados)
+Controlador → Validador: validarDados(dados)
+Validador → Controlador: dados válidos
+Controlador → DataService: salvarConsulta(consulta)
+DataService → Controlador: confirmação
+Controlador → Interface: atualizarView()
+Interface → Paciente: exibir confirmação
+                </pre>
+            </div>
+        </div>
+
+        <div id="testes" class="doc-content">
+            <h3>🧪 Plano de Testes</h3>
+            <table class="test-table">
+                <tr><th>Caso de Teste</th><th>Pré-condição</th><th>Passos</th><th>Resultado Esperado</th></tr>
+                <tr><td>CT01 - Cadastrar Paciente</td><td>Campos válidos</td><td>Preencher e salvar</td><td>Paciente listado</td></tr>
+                <tr><td>CT02 - Agendar Consulta</td><td>Paciente e médico existentes</td><td>Selecionar e salvar</td><td>Consulta agendada</td></tr>
+                <tr><td>CT03 - Validar CPF Duplicado</td><td>CPF já cadastrado</td><td>Tentar cadastrar novamente</td><td>Mensagem de erro</td></tr>
+                <tr><td>CT04 - Cancelar Consulta</td><td>Consulta agendada</td><td>Clicar em cancelar</td><td>Status alterado</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAIS -->
+<div id="modalPaciente" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModal('modalPaciente')">&times;</span>
+        <h3>Cadastrar Paciente</h3>
+        <input type="text" id="modalPacienteNome" placeholder="Nome completo">
+        <input type="text" id="modalPacienteCpf" placeholder="CPF">
+        <input type="text" id="modalPacienteTelefone" placeholder="Telefone">
+        <input type="date" id="modalPacienteDataNasc" placeholder="Data de Nascimento">
+        <button class="btn-primary" onclick="salvarPaciente()">Salvar</button>
+    </div>
+</div>
+
+<div id="modalMedico" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModal('modalMedico')">&times;</span>
+        <h3>Cadastrar Médico</h3>
+        <input type="text" id="modalMedicoNome" placeholder="Nome completo">
+        <input type="text" id="modalMedicoEspecialidade" placeholder="Especialidade">
+        <input type="text" id="modalMedicoCrm" placeholder="CRM">
+        <button class="btn-primary" onclick="salvarMedico()">Salvar</button>
+    </div>
+</div>
+
+<div id="modalConsulta" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModal('modalConsulta')">&times;</span>
+        <h3>Agendar Consulta</h3>
+        <select id="modalConsultaPaciente"></select>
+        <select id="modalConsultaMedico"></select>
+        <input type="datetime-local" id="modalConsultaData">
+        <button class="btn-primary" onclick="salvarConsulta()">Agendar</button>
     </div>
 </div>
 
